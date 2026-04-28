@@ -32,7 +32,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role = Role.ROLE_USER;
+    private Role role = Role.ROLE_ADMIN;
 
     @OneToMany(mappedBy = "user")
     private List<CartItem> cartItems = new ArrayList<>();

@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,7 +59,7 @@ class CartServiceTest {
         when(userRepository.findByEmail("user@mail.com")).thenReturn(Optional.of(user));
         when(productRepository.findById(10L)).thenReturn(Optional.of(product));
         when(cartItemRepository.findByUserIdAndProductId(1L, 10L)).thenReturn(Optional.empty());
-        when(cartItemRepository.save(any(CartItem.class))).thenReturn(cartItem);
+        when(cartItemRepository.save(any(CartItem.class))).thenReturn(Objects.requireNonNull(cartItem));
         when(cartItemRepository.findByUserId(1L)).thenReturn(List.of(cartItem));
 
         CartResponse response = cartService.addItem("user@mail.com", new CartItemRequest(10L, 2));

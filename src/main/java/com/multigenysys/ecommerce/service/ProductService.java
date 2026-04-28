@@ -35,15 +35,13 @@ public class ProductService {
     }
 
     public ProductResponse updateProduct(Long id, ProductRequest request) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product product = getRequiredProduct(id);
         apply(product, request);
         return toResponse(productRepository.save(product));
     }
 
     public void deleteProduct(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product product = getRequiredProduct(id);
         productRepository.delete(product);
     }
 
@@ -64,5 +62,10 @@ public class ProductService {
                 product.getStockQuantity(),
                 product.getImageUrl()
         );
+    }
+
+    private Product getRequiredProduct(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
     }
 }

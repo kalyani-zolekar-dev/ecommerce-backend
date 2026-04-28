@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,9 +63,9 @@ class OrderServiceTest {
         when(userRepository.findByEmail("user@mail.com")).thenReturn(Optional.of(user));
         when(cartService.getCartItemsForUser(1L)).thenReturn(List.of(cartItem));
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> {
-            Order order = invocation.getArgument(0);
+            Order order = invocation.<Order>getArgument(0);
             order.setId(99L);
-            return order;
+            return Objects.requireNonNull(order);
         });
 
         CreateOrderRequest request = new CreateOrderRequest(

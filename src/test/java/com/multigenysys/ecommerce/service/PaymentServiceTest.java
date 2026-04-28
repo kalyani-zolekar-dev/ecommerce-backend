@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,15 +31,16 @@ class PaymentServiceTest {
 
     @Test
     void createPaymentIntent_ShouldReturnMockIntentWhenSecretMissing() {
+        PaymentService service = Objects.requireNonNull(paymentService);
         Order order = new Order();
         order.setId(1L);
         order.setTotalPrice(new BigDecimal("250"));
         order.setPaymentStatus(PaymentStatus.PENDING);
 
-        ReflectionTestUtils.setField(paymentService, "stripeSecretKey", "sk_test_replace_me");
+        ReflectionTestUtils.setField(service, "stripeSecretKey", "sk_test_replace_me");
         when(orderService.getOrderEntityForUser("user@mail.com", 1L)).thenReturn(order);
 
-        PaymentIntentResponse response = paymentService.createPaymentIntent("user@mail.com", 1L);
+        PaymentIntentResponse response = service.createPaymentIntent("user@mail.com", 1L);
 
         assertEquals(1L, response.orderId());
         assertEquals("MOCK_PENDING", response.status());
@@ -46,13 +48,14 @@ class PaymentServiceTest {
 
     @Test
     void updatePaymentResult_ShouldMarkSuccess() {
+        PaymentService service = Objects.requireNonNull(paymentService);
         Order order = new Order();
         order.setId(1L);
         order.setPaymentReference("pi_123");
         when(orderService.getOrderEntityForUser("user@mail.com", 1L)).thenReturn(order);
 
-        ReflectionTestUtils.setField(paymentService, "stripeSecretKey", "");
-        paymentService.updatePaymentResult("user@mail.com", 1L, new PaymentUpdateRequest("pi_123", true));
+        ReflectionTestUtils.setField(service, "stripeSecretKey", "");
+        service.updatePaymentResult("user@mail.com", 1L, new PaymentUpdateRequest("pi_123", true));
 
         verify(orderService).updatePaymentStatus(order, PaymentStatus.SUCCESS, "pi_123");
     }
