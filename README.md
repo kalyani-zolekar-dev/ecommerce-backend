@@ -1,41 +1,33 @@
-# Ecommerce Backend Project
+# 🛒 Ecommerce Backend Project
 
-## Description
-This is a backend application for an Ecommerce system developed using Spring Boot. It provides REST APIs for managing users, products, and orders.
+## 📌 Description
+Robust and scalable E-commerce backend built using Spring Boot. This application provides secure REST APIs for managing users, products, and orders
 
-## Technologies Used
+## 🚀 Tech Stack
 - Java
 - Spring Boot
 - Spring Data JPA
-- Hibernate
 - MySQL
-- Maven
+- REST APIs
 
-## Features
-- User Registration & Login
-- Product Management (Add, Update, Delete)
-- Order Management
-- RESTful APIs
-- Database Integration with MySQL
+## 🔑 Features
+- User Authentication & Authorization
+- Product Management
+- Order Processing System
+- Secure API Handling
+- Database Integration with JPA
 
-## Project Structure
+## 📂 Project Structure
 - Controller Layer
 - Service Layer
 - Repository Layer
-- Entity Classes
+- Entity Models
 
-## How to Run
-1. Clone the repository
-2. Open in Eclipse IDE
-3. Configure MySQL database
-4. Run as Spring Boot Application
+## ▶️ How to Run
+1. Clone the repository  
+2. Open in Eclipse / IntelliJ  
+3. Configure MySQL database  
+4. Run the Spring Boot application  
 
-## API Endpoints (Sample)
-- `POST /users/register`
-- `POST /users/login`
-- `GET /products`
-- `POST /products`
-- `DELETE /products/{id}`
-
-## Maintained By
+## 👩‍💻 Author
 Kalyani Zolekar
